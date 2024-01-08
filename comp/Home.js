@@ -6,21 +6,16 @@ import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 export function Home({ navigation }) {
   return (
     <ImageBackground source={require('../assets/backround.png')} resizeMode="cover" style={styles.image}>
-    <View style={styles.container}>
-      
-
-        <Image
-        source={require('../assets/Badges-DNDCHAR.png')}
-        style={styles.imageHead}
-        resizeMode="contain"
-      />
-
-      <View style={styles.textContainer}>
-        
-        <Text style={styles.text}>Logge dich ein um deine DnD Characktere zu erstellen und dich mit einer Party ins Abentuer zu stürtzen.</Text>
+      <View style={styles.container}>
+          <Image
+          source={require('../assets/Badges-DNDCHAR.png')}
+          style={styles.imageHead}
+          resizeMode="contain"
+          />
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>Logge dich ein um deine DnD Characktere zu erstellen und dich mit einer Party ins Abentuer zu stürtzen.</Text>
+        </View>
       </View>
-      
-    </View>
     </ImageBackground>
   );
 }

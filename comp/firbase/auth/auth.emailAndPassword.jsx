@@ -7,18 +7,21 @@ import {
 
 const auth = getAuth(firebaseApp);
 
-export const createNewUserWithEmailAndPassword = (email, password) => {
+export const createNewUserWithEmailAndPassword = async (email, password) => {
   try {
-    return createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    return userCredential;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error.message);
   }
 };
 
-export const signInThisUserWithEmailAndPassword = (email, password) => {
+export const signInThisUserWithEmailAndPassword = async (email, password) => {
   try {
-    return signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error.message);
   }
 };
+

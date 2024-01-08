@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Modal } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Modal, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { auth } from "../firbase/firebase.settings";
@@ -35,22 +35,30 @@ export function User() {
         <Text style={styles.userEmail}>{userEmail}</Text>
       </View>
       <Pressable style={styles.menuIcon} onPress={() => setModalVisible(true)}>
-        <FontAwesomeIcon icon={faBars} size={24} />
+        <FontAwesomeIcon icon={faBars} size={24} color='white'/>
       </Pressable>
     </View>
 
     <View style={styles.buttonContainer}>
-      <Text>Character</Text>
-      <Pressable style={styles.button} onPress={() => navigation.navigate('MyProjects')}>
+      <Image
+          source={require('../../assets/Badges-22Char.png')}
+          style={styles.imageHead}
+          resizeMode="contain"
+          />
+      <Pressable style={styles.button} onPress={() => navigation.navigate('Charakterliste')}>
         <Text style={styles.buttonText}>Meine Charactere</Text>
       </Pressable>
-      <Pressable style={styles.button} onPress={() => navigation.navigate('NewProject')}>
+      <Pressable style={styles.button} onPress={() => navigation.navigate('NewChar')}>
         <Text style={styles.buttonText}>Neuer Character</Text>
       </Pressable>
     </View>
 
     <View style={styles.buttonContainer}>
-      <Text>Abenteuer</Text>
+      <Image
+          source={require('../../assets/Badges-22Adv.png')}
+          style={styles.imageHead}
+          resizeMode="contain"
+          />
       <Pressable style={styles.button} onPress={() => navigation.navigate('MyProjects')}>
         <Text style={styles.buttonText}>Meine Abenteuer</Text>
       </Pressable>
@@ -89,11 +97,12 @@ export function User() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#292b29',
     alignItems: 'center',
     justifyContent: 'center',
   },
   header: {
+    color: 'white',
     position: 'absolute',
     top: 20, 
     left: 10,
@@ -110,15 +119,18 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'white',
   },
   userEmail: {
     fontSize: 16,
     marginTop: 5,
+    color: 'white',
   },
   menuIcon: {
     position: 'absolute',
     top: 0, 
     right: 30,
+    color: 'white',
   },
   button: {
     margin: 15,
@@ -135,14 +147,14 @@ const styles = StyleSheet.create({
   },
    buttonContainer: {
     flexDirection: 'column',
-    justifyContent: 'space-around', // Zentriert die Buttons horizontal mit gleichem Abstand
+    justifyContent: 'center', 
     alignItems: 'center',
     borderWidth: 1, // Rahmenbreite
     borderColor: '#ddd', // Rahmenfarbe
     borderRadius: 10, // Abgerundete Ecken
     marginVertical: 20, // Vertikaler Abstand zwischen den View-Containern
-    width: '90%', // Breite der View-Container
-    alignSelf: 'center', // Zentriert die View-Container in der Gesamtansicht
+    width: '80%',
+    height: '30%'
   },
   modalContainer: {
   position: 'absolute', 
@@ -170,5 +182,10 @@ modalOption: {
   borderBottomColor: 'grey',
   borderBottomWidth: 1,
 },
+imageHead: {
+    width: '90%',
+    height: '40%',
+    
+  }
 });
 

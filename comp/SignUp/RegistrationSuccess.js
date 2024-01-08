@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 
 export function RegistrationSuccess({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Registrierung erfolgreich!</Text>
-      <Button
-        title="Zum Login"
-        onPress={() => navigation.navigate('Login')}
-      />
+      <Pressable style={styles.button}
+        onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.buttonText}>Zum Login</Text>
+      </Pressable>
     </View>
   );
 };
@@ -23,5 +23,17 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     marginBottom: 20,
+  },
+  button: {
+    marginTop: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 5,
+    backgroundColor: '#007BFF',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
   },
 });

@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { auth } from "../firbase/firebase.settings";
+import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { signInThisUserWithEmailAndPassword } from '../firbase/auth/auth.emailAndPassword';
-import { SignInWithGooglePopup } from '../firbase/auth/auth.googlePopup';
+import { signInWithGooglePopup } from '../firbase/auth/auth.googlePopup';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -30,9 +29,11 @@ const handleEmailLogin = async () => {
     }
     try {
         await signInThisUserWithEmailAndPassword(email, password);
-        navigation.navigate('UserArea', { screen: 'TSM2.0' });
+        navigation.navigate('UserArea', { screen: 'User'});
     } catch (error) {
         console.error("Error logging in with email and password:", error);
+        setErr("Error logging in with email and password");
+        return;
     }
 };
 
@@ -55,13 +56,13 @@ const handleEmailLogin = async () => {
         style={styles.input}
       />
       
-      <TouchableOpacity style={styles.button} onPress={handleEmailLogin}>
+      <Pressable style={styles.button} onPress={handleEmailLogin}>
         <Text style={styles.buttonText}>Login with Email</Text>
-      </TouchableOpacity>
+      </Pressable>
       
-      <TouchableOpacity style={styles.button} onPress={() => SignInWithGooglePopup(navigation)}>
+      <Pressable style={styles.button} onPress={() => signInWithGooglePopup(navigation, 'User')}>
         <Text style={styles.buttonText}>Login with Google</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

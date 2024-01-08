@@ -8,7 +8,7 @@ export default function Main() {
   return (
     <NavigationContainer>
       <AuthWrapper>
-      <RootNavigator />
+      <RootNavigator/>
       </AuthWrapper>
     </NavigationContainer>
   );

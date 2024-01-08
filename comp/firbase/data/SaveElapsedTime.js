@@ -1,22 +1,22 @@
 import db from './firestoreInit';
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 
-export async function saveElapsedTimeToFirestore(projectId, additionalTime) {
+export async function saveCharStatsToFirestore(docId, stats) {
+    if (!docId) {
+        console.error("docId ist undefined.");
+        return;
+    }
+
     try {
-        const projectRef = doc(db, 'projects', projectId);
+        const charRef = doc(db, 'Charakter', docId);
 
-        const projectSnap = await getDoc(projectRef);
-
-        if (projectSnap.exists()) {
-            const currentElapsedTime = projectSnap.data().elapsedTime || 0;
-            
-            const newElapsedTime = currentElapsedTime + additionalTime;
-
-            await updateDoc(projectRef, { elapsedTime: newElapsedTime });
-        } else {
-            console.error(`Project with ID ${projectId} does not exist.`);
-        }
+        // Statt { stats: stats } verwenden Sie die Statistiken direkt
+        await updateDoc(charRef, stats);
+        console.log('Charakterdaten erfolgreich aktualisiert');
     } catch (error) {
-        console.error("Error updating elapsed time in Firestore: ", error);
+        console.error("Fehler beim Aktualisieren der Charakterstatistiken in Firestore: ", error);
     }
 }
+
+
+

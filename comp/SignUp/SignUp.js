@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'; // Import TouchableOpacity
+import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { createNewUserWithEmailAndPassword } from '../firbase/auth/auth.emailAndPassword';
-import { SignInWithGooglePopup } from '../firbase/auth/auth.googlePopup';
+import { signInWithGooglePopup } from '../firbase/auth/auth.googlePopup';
 
 export function SignUp({ navigation }) {
   const [formValue, setFormValue] = React.useState({
@@ -61,7 +61,7 @@ export function SignUp({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Sign Up DND Char Sheet</Text>
+      <Text style={styles.heading}>Sign Up</Text>
       {err ? <Text style={{color: 'red'}}>{err}</Text> : null}
       <TextInput
         placeholder="Email"
@@ -83,13 +83,15 @@ export function SignUp({ navigation }) {
         secureTextEntry
         style={styles.input}
       />
-      <TouchableOpacity style={styles.button} onPress={handleEmailSignUp}>
-        <Text style={styles.buttonText}>Sign Up with Email</Text>
-      </TouchableOpacity>
+      <Pressable style={styles.button} onPress={handleEmailSignUp}>
+        <Text style={styles.buttonText}>SignUp with Email</Text>
+      </Pressable>
       
-      <TouchableOpacity style={styles.button} onPress={SignInWithGooglePopup}>
-        <Text style={styles.buttonText}>Sign Up with Google</Text>
-      </TouchableOpacity>
+     
+    <Pressable style={styles.button} onPress={() => signInWithGooglePopup(navigation, 'User')}>
+        <Text style={styles.buttonText}>SignUp with Google</Text>
+    </Pressable>
+
     </View>
   );
 };
@@ -125,7 +127,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
-
 
 
 
