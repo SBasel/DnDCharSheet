@@ -1,15 +1,25 @@
-import React from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
-import { createNewUserWithEmailAndPassword } from '../firbase/auth/auth.emailAndPassword';
-import { signInWithGooglePopup } from '../firbase/auth/auth.googlePopup';
+import React from "react";
+import {
+  ScrollView,
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  ImageBackground,
+} from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome"; // FontAwesome-Icon hinzufügen
+import { createNewUserWithEmailAndPassword } from "../firbase/auth/auth.emailAndPassword";
+import { signInWithGooglePopup } from "../firbase/auth/auth.googlePopup";
+import { useNavigation } from "@react-navigation/native";
 
 export function SignUp({ navigation }) {
   const [formValue, setFormValue] = React.useState({
-    email: '',
-    password: '',
-    confirmPassword: ''
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
-  const [err, setErr] = React.useState('');
+  const [err, setErr] = React.useState("");
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -36,8 +46,11 @@ export function SignUp({ navigation }) {
     }
 
     try {
-      await createNewUserWithEmailAndPassword(formValue.email, formValue.password);
-      navigation.navigate('RegistrationSuccess');
+      await createNewUserWithEmailAndPassword(
+        formValue.email,
+        formValue.password
+      );
+      navigation.navigate("RegistrationSuccess");
     } catch (error) {
       switch (error.code) {
         case "auth/email-already-in-use":
@@ -47,7 +60,9 @@ export function SignUp({ navigation }) {
           setErr("The email is invalid");
           break;
         case "auth/operation-not-allowed":
-          setErr("An error has occurred here. Please contact support. [Operation not allowed]");
+          setErr(
+            "An error has occurred here. Please contact support. [Operation not allowed]"
+          );
           break;
         case "auth/weak-password":
           setErr("The password is too weak");
@@ -60,74 +75,99 @@ export function SignUp({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Sign Up</Text>
-      {err ? <Text style={{color: 'red'}}>{err}</Text> : null}
-      <TextInput
-        placeholder="Email"
-        value={formValue.email}
-        onChangeText={(text) => setFormValue(prev => ({ ...prev, email: text }))}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        value={formValue.password}
-        onChangeText={(text) => setFormValue(prev => ({ ...prev, password: text }))}
-        secureTextEntry
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Confirm Password"
-        value={formValue.confirmPassword}
-        onChangeText={(text) => setFormValue(prev => ({ ...prev, confirmPassword: text }))}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Pressable style={styles.button} onPress={handleEmailSignUp}>
-        <Text style={styles.buttonText}>SignUp with Email</Text>
-      </Pressable>
-      
-     
-    <Pressable style={styles.button} onPress={() => signInWithGooglePopup(navigation, 'User')}>
-        <Text style={styles.buttonText}>SignUp with Google</Text>
-    </Pressable>
-
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <ImageBackground
+        source={require("../../assets/background.webp")}
+        resizeMode="cover"
+        style={styles.image}>
+        <View style={styles.backButtonContainer}>
+          <Pressable onPress={() => navigation.goBack()}>
+            <Icon name="arrow-left" size={24} color="white" />
+          </Pressable>
+        </View>
+        <Text style={styles.heading}>Sign Up</Text>
+        {err ? <Text style={{ color: "red" }}>{err}</Text> : null}
+        <TextInput
+          placeholder="Email"
+          value={formValue.email}
+          onChangeText={(text) =>
+            setFormValue((prev) => ({ ...prev, email: text }))
+          }
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Password"
+          value={formValue.password}
+          onChangeText={(text) =>
+            setFormValue((prev) => ({ ...prev, password: text }))
+          }
+          secureTextEntry
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Confirm Password"
+          value={formValue.confirmPassword}
+          onChangeText={(text) =>
+            setFormValue((prev) => ({ ...prev, confirmPassword: text }))
+          }
+          secureTextEntry
+          style={styles.input}
+        />
+        <Pressable style={styles.button} onPress={handleEmailSignUp}>
+          <Text style={styles.buttonText}>SignUp with Email</Text>
+        </Pressable>
+      </ImageBackground>
+    </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1, // Verwenden Sie flexGrow statt flex, damit es sich korrekt ausdehnt
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   heading: {
-    fontSize: 24,
-    marginBottom: 20, // space between heading and inputs
+    fontSize: 48,
+    fontWeight: "bold",
+    padding: 10,
+    marginTop: 30,
+    color: "white",
+    marginTop: 200,
   },
   input: {
     borderWidth: 1,
+    borderRadius: 5,
     width: 250, // increased width
     fontSize: 18, // increased font size
     padding: 10, // added padding for bigger touch area
     marginBottom: 15, // increased space between inputs
+    backgroundColor: "white",
   },
   button: {
-    marginTop: 15,
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 5,
-    backgroundColor: '#007BFF',
-    alignItems: 'center',
+    backgroundColor: "#007BFF",
+    alignItems: "center",
+    minWidth: 250,
+    marginBottom: 15,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
   },
+  backButtonContainer: {
+    position: "absolute",
+    top: 50, // Abstand vom oberen Rand
+    left: 20, // Abstand vom linken Rand
+    zIndex: 10, // Stellt sicher, dass der Button über anderen Elementen liegt
+  },
 });
-
-
-
-
