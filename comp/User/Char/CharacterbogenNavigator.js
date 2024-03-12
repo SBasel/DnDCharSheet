@@ -24,52 +24,23 @@ function CharakterbogenTabs() {
         tabBarBackground: () => (
           <View style={{ flex: 1, backgroundColor: "transparent" }} />
         ),
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+          if (route.name === "Character Stats") iconName = "male";
+          else if (route.name === "Fight") iconName = "shield";
+          else if (route.name === "Skills & Magic") iconName = "star";
+          else if (route.name === "Inventar") iconName = "briefcase";
+          else if (route.name === "Story & Eid") iconName = "book";
+
+          return <Icon name={iconName} color={color} size={size} />;
+        },
+        tabBarLabel: () => null,
       })}>
-      <Tab.Screen
-        name="Character Stats"
-        component={Charakterbogen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="male" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Fight"
-        component={Charakterbogen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="shield" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Skills & Magic"
-        component={Charakterbogen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="star" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Inventar"
-        component={Charakterbogen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="briefcase" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Story & Eid"
-        component={Charakterbogen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="book" color={color} size={size} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Character Stats" component={Charakterbogen} />
+      <Tab.Screen name="Fight" component={Charakterbogen} />
+      <Tab.Screen name="Skills & Magic" component={Charakterbogen} />
+      <Tab.Screen name="Inventar" component={Charakterbogen} />
+      <Tab.Screen name="Story & Eid" component={Charakterbogen} />
     </Tab.Navigator>
   );
 }
