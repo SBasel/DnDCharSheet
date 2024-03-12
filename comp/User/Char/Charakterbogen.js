@@ -21,6 +21,7 @@ import { EditStatsModal } from "./charcomp/editstat";
 import db from "../../firbase/data/firestoreInit";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Badge from "./charcomp/Badge";
+import SkillBadge from "./charcomp/SkillBadge";
 
 export function Charakterbogen({ route, navigation }) {
   const { char } = route.params;
@@ -100,91 +101,197 @@ export function Charakterbogen({ route, navigation }) {
           </Pressable>
         </View>
         <View style={{ flex: 1, marginTop: 80 }}>
-          <View containerStyle={styles.cardContainer}>
-            <View>
-              <View style={styles.imageContainer}>
-                <Text style={styles.text}>
-                  {charData.vorname} {charData.name}
-                </Text>
-              </View>
-              <Text>Charakter Name</Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                margin: 5,
-              }}>
-              <CharakterInfo
-                charDataone={charData.selectedClass}
-                charDatatwo={charData.level}
-                infoone={"Klasse"}
-                infotwo={"Level"}
-              />
-              <CharakterInfo
-                charDataone={charData.selectedClass}
-                charDatatwo={charData.level}
-                infoone={"Hintergrund"}
-                infotwo={"Exp. Points"}
-              />
-              <CharakterInfo
-                charDataone={charData.selectedClass}
-                charDatatwo={charData.level}
-                infoone={"Alignment"}
-                infotwo={"Rasse"}
-              />
-              <CharakterInfo
-                charDataone={charData.selectedClass}
-                charDatatwo={charData.level}
-                infoone={"Vorname"}
-                infotwo={"Nachname"}
-              />
-            </View>
-            <View style={{ flexDirection: "row", border: "solid red" }}>
+          <View>
+            <View style={{ flexDirection: "row" }}>
               <View>
-                <View style={{ flexDirection: "row" }}>
-                  <CharacterBadge
-                    stat={"STR"}
-                    value={charData.str}
-                    onPress={() => handlePressBadge("str", charData.str)}
-                  />
+                <View style={styles.imageContainer}>
+                  <Text style={styles.text}>
+                    {charData.vorname} {charData.name}
+                  </Text>
                 </View>
-                <View style={{ flexDirection: "row" }}>
-                  <CharacterBadge
-                    stat={"DEX"}
-                    value={charData.dex}
-                    onPress={() => handlePressBadge("dex", charData.dex)}
-                  />
+                <Text>Charakter Name</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  margin: 5,
+                }}>
+                <CharakterInfo
+                  charDataone={charData.selectedClass}
+                  charDatatwo={charData.level}
+                  infoone={"Klasse"}
+                  infotwo={"Level"}
+                />
+                <CharakterInfo
+                  charDataone={charData.selectedClass}
+                  charDatatwo={charData.level}
+                  infoone={"Hintergrund"}
+                  infotwo={"Exp. Points"}
+                />
+                <CharakterInfo
+                  charDataone={charData.selectedClass}
+                  charDatatwo={charData.level}
+                  infoone={"Alignment"}
+                  infotwo={"Rasse"}
+                />
+              </View>
+            </View>
+            <View style={styles.rowContainer}>
+              <View style={styles.badgesContainer}>
+                {/* Character Badges */}
+                {["str", "dex", "con", "int", "wis", "cha"].map((stat) => (
+                  <View key={stat} style={{ flexDirection: "row" }}>
+                    <CharacterBadge
+                      stat={stat.toUpperCase()}
+                      value={charData[stat]}
+                      onPress={() => handlePressBadge(stat, charData[stat])}
+                    />
+                  </View>
+                ))}
+              </View>
+              <View style={styles.badgeContainer}>
+                {/* Badge neben den Charakterabzeichen */}
+                <Badge number={10} text="Inspiration" />
+                <Badge number={10} text="Proficiency Bonus" />
+                <View>
+                  <Text>Saving Throws</Text>
                 </View>
-                <View style={{ flexDirection: "row" }}>
-                  <CharacterBadge
-                    stat={"CON"}
-                    value={charData.con}
-                    onPress={() => handlePressBadge("con", charData.con)}
-                  />
+                <View style={styles.skillContainer}>
+                  <View>
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Strength"
+                      isTrained={true}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Dexterity"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Constitution"
+                      isTrained={true}
+                    />
+                  </View>
+                  <View>
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Intelligence"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Wisdom"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Charisma"
+                      isTrained={false}
+                    />
+                  </View>
                 </View>
-                <View style={{ flexDirection: "row" }}>
-                  <CharacterBadge
-                    stat={"INT"}
-                    value={charData.int}
-                    onPress={() => handlePressBadge("int", charData.int)}
-                  />
+                <View>
+                  <Text>Skills</Text>
                 </View>
-                <View style={{ flexDirection: "row" }}>
-                  <CharacterBadge
-                    stat={"WIS"}
-                    value={charData.wis}
-                    onPress={() => handlePressBadge("wis", charData.wis)}
-                  />
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  <CharacterBadge
-                    stat={"CHA"}
-                    value={charData.cha}
-                    onPress={() => handlePressBadge("cha", charData.cha)}
-                  />
+                <View style={styles.skillContainer}>
+                  <View>
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Acrobatics"
+                      isTrained={true}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Animal Handling"
+                      isTrained={true}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Arcana"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Athletics"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Deception"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="History"
+                      isTrained={true}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Insight"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Intimidation"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Investigation"
+                      isTrained={false}
+                    />
+                  </View>
+                  <View>
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Medicine"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Nature"
+                      isTrained={true}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Perception"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Performance"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Persuasion"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Religion"
+                      isTrained={true}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Sleight of Hand"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Stealth"
+                      isTrained={false}
+                    />
+                    <SkillBadge
+                      skillNumber="5"
+                      skillText="Survival"
+                      isTrained={true}
+                    />
+                  </View>
                 </View>
               </View>
-              <Badge number={10} text="Neue Nachrichten" />
             </View>
           </View>
         </View>
@@ -248,5 +355,21 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: "black",
   },
-  cardContainer: {},
+  rowContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+  },
+  badgesContainer: {
+    flex: 1,
+  },
+  badgeContainer: {
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  skillContainer: {
+    flexDirection: "row",
+
+    padding: 10,
+  },
 });

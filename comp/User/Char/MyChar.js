@@ -71,7 +71,15 @@ export function MyChar() {
           {charInfo.map((char, index) => (
             <TouchableHighlight
               key={index}
-              onPress={() => navigation.navigate("Charakterbogen", { char })}>
+              onPress={() =>
+                navigation.navigate("UserArea", {
+                  screen: "Charakterbogen", // The screen within UserArea Stack
+                  params: {
+                    screen: "Character Stats", // The screen within CharakterbogenTabs
+                    params: { char: char }, // Your params
+                  },
+                })
+              }>
               <Card containerStyle={styles.containerStyle}>
                 <ImageBackground
                   source={require("../../../assets/pergament.webp")}

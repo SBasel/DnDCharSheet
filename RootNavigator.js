@@ -9,6 +9,7 @@ import { Charakterbogen } from "./comp/User/Char/Charakterbogen";
 import { RegistrationSuccess } from "./comp/SignUp/RegistrationSuccess";
 import { StyleSheet } from "react-native";
 import { Home } from "./comp/Home";
+import CharakterbogenNavigator from "./comp/User/Char/CharacterbogenNavigator";
 
 const options = { backgroundColor: "#292b29", color: "white" };
 const Stack = createStackNavigator();
@@ -38,7 +39,7 @@ function UserNavigator() {
       />
       <Stack.Screen
         name="Charakterbogen"
-        component={Charakterbogen}
+        component={CharakterbogenNavigator}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

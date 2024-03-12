@@ -190,11 +190,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(250, 250, 250, 1)",
     borderRadius: 10,
     padding: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   closeButton: {
     position: "absolute",

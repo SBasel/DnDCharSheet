@@ -173,7 +173,7 @@ export const CharacterBadge = ({ value, stat, onPress }) => {
 const styles = StyleSheet.create({
   imageContainerStat: {
     height: 100,
-    width: "50%",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     marginTop: 5,
