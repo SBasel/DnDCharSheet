@@ -73,11 +73,8 @@ export function MyChar() {
               key={index}
               onPress={() =>
                 navigation.navigate("UserArea", {
-                  screen: "Charakterbogen", // The screen within UserArea Stack
-                  params: {
-                    screen: "Character Stats", // The screen within CharakterbogenTabs
-                    params: { char: char }, // Your params
-                  },
+                  screen: "Charakterbogen",
+                  params: { char: char }, // Char-Daten werden hier übergeben
                 })
               }>
               <Card containerStyle={styles.containerStyle}>

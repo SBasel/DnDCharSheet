@@ -5,7 +5,6 @@ import { Login } from "./comp/Login/Login";
 import { User } from "./comp/User/User";
 import { MyChar } from "./comp/User/Char/MyChar";
 import { NewChar } from "./comp/User/Char/NewChar";
-import { Charakterbogen } from "./comp/User/Char/Charakterbogen";
 import { RegistrationSuccess } from "./comp/SignUp/RegistrationSuccess";
 import { StyleSheet } from "react-native";
 import { Home } from "./comp/Home";

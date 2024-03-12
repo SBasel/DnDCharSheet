@@ -15,15 +15,18 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { onAuthStateChangeListener } from "../../firbase/auth/auth.listener";
-import { CharacterBadge } from "./charcomp/statcomp";
 import { CharakterInfo } from "./charcomp/charinfo";
 import { EditStatsModal } from "./charcomp/editstat";
 import db from "../../firbase/data/firestoreInit";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Badge from "./charcomp/Badge";
-import SkillBadge from "./charcomp/SkillBadge";
+import HitPointsBadge from "./charcomp/HitPoint";
+import ArmorBadge from "./charcomp/ArmorBadge";
+import HitDice from "./charcomp/HitDice";
+import ToggleCircles from "./charcomp/DeathSaves";
+import TableComponent from "./charcomp/Attack";
+import TraitsComponent from "./charcomp/Traits";
 
-export function Charakterbogen({ route, navigation }) {
+export function Fight({ route, navigation }) {
   const { char } = route.params;
   const [charData, setCharData] = useState(null);
   const [userId, setUserId] = useState(null);
@@ -38,6 +41,12 @@ export function Charakterbogen({ route, navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedStat, setSelectedStat] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
+
+  const myDataArray = [
+    { name: "Sword", atkBonus: "+5", damage: "1d8+3", type: "Slashing" },
+    { name: "Bow", atkBonus: "+3", damage: "1d6+2", type: "Piercing" },
+    // Fügen Sie hier weitere Objekte hinzu
+  ];
 
   const handlePressBadge = (statName, value) => {
     setSelectedStat(statName);
@@ -137,156 +146,43 @@ export function Charakterbogen({ route, navigation }) {
               </View>
             </View>
             <View style={styles.rowContainer}>
-              <View style={styles.badgesContainer}>
-                {/* Character Badges */}
-                {["str", "dex", "con", "int", "wis", "cha"].map((stat) => (
-                  <View key={stat} style={{ flexDirection: "row" }}>
-                    <CharacterBadge
-                      stat={stat.toUpperCase()}
-                      value={charData[stat]}
-                      onPress={() => handlePressBadge(stat, charData[stat])}
-                    />
-                  </View>
-                ))}
-              </View>
               <View style={styles.badgeContainer}>
-                <Badge number={10} text="Inspiration" />
-                <Badge number={10} text="Proficiency Bonus" />
-                <View>
-                  <Text>Saving Throws</Text>
+                <View style={styles.ArmorbadgeContainer}>
+                  <ArmorBadge number={16} text="Armor Class" />
+                  <ArmorBadge number={0} text="Initiative" />
+                  <ArmorBadge number={9} text="Speed" />
+                </View>
+                <View style={styles.badgeContainer}>
+                  <HitPointsBadge maxHp={100} currentHp={85} tempHp={10} />
+                </View>
+                <View style={styles.badgeContainer}>
+                  <View style={{ flexDirection: "row" }}>
+                    <View>
+                      <HitDice hitDiceType={8} numberOfDice={1} />
+                    </View>
+                    <View style={styles.DSContainer}>
+                      <Text>Death Saves</Text>
+                      <View style={styles.row}>
+                        <Text style={styles.textDS}>Successes</Text>
+                        <ToggleCircles />
+                      </View>
+                      <View style={styles.row}>
+                        <Text style={styles.textDS}>Failures</Text>
+                        <ToggleCircles />
+                      </View>
+                    </View>
+                  </View>
                 </View>
                 <View style={styles.skillContainer}>
                   <View>
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Strength"
-                      isTrained={true}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Dexterity"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Constitution"
-                      isTrained={true}
-                    />
+                    <TableComponent data={myDataArray} />
                   </View>
                   <View>
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Intelligence"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Wisdom"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Charisma"
-                      isTrained={false}
-                    />
-                  </View>
-                </View>
-                <View>
-                  <Text>Skills</Text>
-                </View>
-                <View style={styles.skillContainer}>
-                  <View>
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Acrobatics"
-                      isTrained={true}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Animal Handling"
-                      isTrained={true}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Arcana"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Athletics"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Deception"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="History"
-                      isTrained={true}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Insight"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Intimidation"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Investigation"
-                      isTrained={false}
-                    />
-                  </View>
-                  <View>
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Medicine"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Nature"
-                      isTrained={true}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Perception"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Performance"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Persuasion"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Religion"
-                      isTrained={true}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Sleight of Hand"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Stealth"
-                      isTrained={false}
-                    />
-                    <SkillBadge
-                      skillNumber="5"
-                      skillText="Survival"
-                      isTrained={true}
+                    <TraitsComponent
+                      spells={[
+                        { name: "Jünger des Lebens" },
+                        { name: "Göttliche Macht" },
+                      ]}
                     />
                   </View>
                 </View>
@@ -358,17 +254,39 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
   },
-  badgesContainer: {
-    flex: 1,
-  },
   badgeContainer: {
     flex: 3,
     justifyContent: "center",
     alignItems: "center",
   },
+  DSContainer: {
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "flex-start",
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 10,
+    padding: 10,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  },
+  textDS: {
+    marginLeft: 10,
+    minWidth: 70,
+  },
+  ArmorbadgeContainer: {
+    flex: 3,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   skillContainer: {
     flexDirection: "row",
-
     padding: 10,
   },
 });
